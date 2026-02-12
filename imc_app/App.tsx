@@ -1,11 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.texto}>Altura</Text>
+      <View style={styles.logo}>
+          <Image source={require('./assets/logo-app-imc.png')} style={styles.logoImage} />
+      </View>
+
+      <View style={styles.form}>
+        <Text style={styles.texto}>Altura</Text>
       <TextInput style={styles.campo}></TextInput>
 
       <Text style={styles.texto}>Peso</Text>
@@ -18,6 +23,8 @@ export default function App() {
       </TouchableOpacity>
 
       <StatusBar style="auto" />
+      </View>
+      
     </View>
   );
 }
@@ -25,13 +32,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#249cb1',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+
+  logo: {},
+
+  form: {
+    backgroundColor: '#fff',
+    padding: 30,
+    height: '100%',
+    borderRadius: 10,
   },
 
   campo: {
-    backgroundColor: '#fff',
-    width: '80%',
+    backgroundColor: '#b3b0b0',
+    width: '100%',
     marginBottom: 15,
     borderRadius: 5,
     height: 40,
@@ -48,11 +62,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginTop: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   textoBotao: {
     color: '#fff',
     fontSize: 18,
+    textAlign: 'center'
   },
 });
 
