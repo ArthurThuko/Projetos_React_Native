@@ -5,8 +5,8 @@ import { useState } from 'react';
 export default function App() {
   return (
     <View style={styles.container}>
-      <View style={styles.logo}>
-          <Image source={require('./assets/logo-app-imc.png')} style={styles.logoImage} />
+      <View style={styles.containerLogo}>
+          <Image source={require('./assets/logo-app-imc.png')} style={styles.logo} />
       </View>
 
       <View style={styles.form}>
@@ -34,13 +34,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#249cb1',
   },
 
-  logo: {},
+  containerLogo: {
+    height: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  logo: {
+    width: 170,
+    height: 60,
+  },
 
   form: {
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     padding: 30,
     height: '100%',
     borderRadius: 10,
+    borderTopStartRadius: 30,
   },
 
   campo: {
