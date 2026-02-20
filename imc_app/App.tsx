@@ -14,22 +14,21 @@ export default function App() {
   const [altura, setAltura] = useState<string>("");
   const [imc, setImc] = useState<number | null>(null);
   const [classificacao, setClassificacao] = useState<string>("");
+  const [alerta, setAlerta] = useState<boolean>(false);
 
   function validarCampos() {
-    if (imc === null) {
-      return false;
+    if (peso !== "" && altura !== "") {
+      setAlerta(false);
+      calculoIMC();
+    } else {
+      setAlerta(true);
     }
-    return true;
   }
 
   function calculoIMC(){
     let imcCalculado = parseFloat(peso) / (parseFloat(altura)**2);
     setImc(imcCalculado);
 
-    if (!validarCampos()) {
-      return;
-    }
-    
     if (imcCalculado < 18.5) {
       setClassificacao("Abaixo do Peso");
     } else if (imcCalculado < 25) {
@@ -51,21 +50,21 @@ export default function App() {
       </View>
 
       <View style={styles.form}>
-        {imc === null && (
+        {alerta === true && (
           <Text style={styles.alerta}>Preencha a altura e o peso</Text>
         )}
 
         <Text style={styles.texto}>Altura</Text>
-        <TextInput style={styles.campo} onChangeText={setAltura}></TextInput>
+        <TextInput style={styles.campo} onChangeText={setAltura} keyboardType="numeric" placeholder="Ex: 1.75"></TextInput>
 
         <Text style={styles.texto}>Peso</Text>
-        <TextInput style={styles.campo} onChangeText={setPeso}></TextInput>
+        <TextInput style={styles.campo} onChangeText={setPeso} keyboardType="numeric" placeholder="Ex: 70"></TextInput>
 
-        <TouchableOpacity style={styles.botao} onPress={calculoIMC}>
+        <TouchableOpacity style={styles.botao} onPress={validarCampos}>
           <Text style={styles.textoBotao}>Calcular</Text>
         </TouchableOpacity>
 
-        {imc !== null && (
+        {imc !== null && alerta === false && (
           <View style={styles.resultado}>
             <Text style={styles.labelResultado}>Seu IMC é:</Text>
             <Text style={styles.resultadoIMC}>{imc?.toFixed(1)}</Text>
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 15,
+    borderRadius: 5,
   },
 
   campo: {
