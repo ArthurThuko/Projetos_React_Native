@@ -14,9 +14,15 @@ export default function App() {
   const [altura, setAltura] = useState<string>("");
   const [imc, setImc] = useState<number | null>(null);
   const [classificacao, setClassificacao] = useState<string>("");
+  const [alerta, setAlerta] = useState<boolean>(false);
 
   function validarCampos() {
-    
+    if (peso !== "" && altura !== "") {
+      setAlerta(false);
+      calculoIMC();
+    } else {
+      setAlerta(true);
+    }
   }
 
   function calculoIMC(){
@@ -44,7 +50,7 @@ export default function App() {
       </View>
 
       <View style={styles.form}>
-        {imc === null && (
+        {alerta === true && (
           <Text style={styles.alerta}>Preencha a altura e o peso</Text>
         )}
 
@@ -54,11 +60,11 @@ export default function App() {
         <Text style={styles.texto}>Peso</Text>
         <TextInput style={styles.campo} onChangeText={setPeso} keyboardType="numeric" placeholder="Ex: 70"></TextInput>
 
-        <TouchableOpacity style={styles.botao} onPress={calculoIMC}>
+        <TouchableOpacity style={styles.botao} onPress={validarCampos}>
           <Text style={styles.textoBotao}>Calcular</Text>
         </TouchableOpacity>
 
-        {imc !== null && (
+        {imc !== null && alerta === false && (
           <View style={styles.resultado}>
             <Text style={styles.labelResultado}>Seu IMC é:</Text>
             <Text style={styles.resultadoIMC}>{imc?.toFixed(1)}</Text>
@@ -105,6 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 15,
+    borderRadius: 5,
   },
 
   campo: {
