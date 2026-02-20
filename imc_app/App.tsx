@@ -16,20 +16,13 @@ export default function App() {
   const [classificacao, setClassificacao] = useState<string>("");
 
   function validarCampos() {
-    if (imc === null) {
-      return false;
-    }
-    return true;
+    
   }
 
   function calculoIMC(){
     let imcCalculado = parseFloat(peso) / (parseFloat(altura)**2);
     setImc(imcCalculado);
 
-    if (!validarCampos()) {
-      return;
-    }
-    
     if (imcCalculado < 18.5) {
       setClassificacao("Abaixo do Peso");
     } else if (imcCalculado < 25) {
@@ -56,10 +49,10 @@ export default function App() {
         )}
 
         <Text style={styles.texto}>Altura</Text>
-        <TextInput style={styles.campo} onChangeText={setAltura}></TextInput>
+        <TextInput style={styles.campo} onChangeText={setAltura} keyboardType="numeric" placeholder="Ex: 1.75"></TextInput>
 
         <Text style={styles.texto}>Peso</Text>
-        <TextInput style={styles.campo} onChangeText={setPeso}></TextInput>
+        <TextInput style={styles.campo} onChangeText={setPeso} keyboardType="numeric" placeholder="Ex: 70"></TextInput>
 
         <TouchableOpacity style={styles.botao} onPress={calculoIMC}>
           <Text style={styles.textoBotao}>Calcular</Text>
