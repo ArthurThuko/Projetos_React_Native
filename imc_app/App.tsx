@@ -1,6 +1,5 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  Image,
   StyleSheet,
   Text,
   View,
@@ -8,6 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
+import { Topo } from "./components/Topo";
+import { Resultado } from "./components/Resultado";
 
 export default function App() {
   const [peso, setPeso] = useState<string>("");
@@ -25,29 +26,14 @@ export default function App() {
     }
   }
 
-  function calculoIMC(){
-    let imcCalculado = parseFloat(peso) / (parseFloat(altura)**2);
+  function calculoIMC() {
+    let imcCalculado = parseFloat(peso) / parseFloat(altura) ** 2;
     setImc(imcCalculado);
-
-    if (imcCalculado < 18.5) {
-      setClassificacao("Abaixo do Peso");
-    } else if (imcCalculado < 25) {
-      setClassificacao("Peso Normal");
-    } else if (imcCalculado < 30) {
-      setClassificacao("Sobrepeso");
-    } else {
-      setClassificacao("Obesidade");
-    }
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.containerLogo}>
-        <Image
-          source={require("./assets/logo-app-imc.png")}
-          style={styles.logo}
-        />
-      </View>
+      <Topo></Topo>
 
       <View style={styles.form}>
         {alerta === true && (
@@ -55,22 +41,27 @@ export default function App() {
         )}
 
         <Text style={styles.texto}>Altura</Text>
-        <TextInput style={styles.campo} onChangeText={setAltura} keyboardType="numeric" placeholder="Ex: 1.75"></TextInput>
+        <TextInput
+          style={styles.campo}
+          onChangeText={setAltura}
+          keyboardType="numeric"
+          placeholder="Ex: 1.75"
+        ></TextInput>
 
         <Text style={styles.texto}>Peso</Text>
-        <TextInput style={styles.campo} onChangeText={setPeso} keyboardType="numeric" placeholder="Ex: 70"></TextInput>
+        <TextInput
+          style={styles.campo}
+          onChangeText={setPeso}
+          keyboardType="numeric"
+          placeholder="Ex: 70"
+        ></TextInput>
 
         <TouchableOpacity style={styles.botao} onPress={validarCampos}>
           <Text style={styles.textoBotao}>Calcular</Text>
         </TouchableOpacity>
 
         {imc !== null && alerta === false && (
-          <View style={styles.resultado}>
-            <Text style={styles.labelResultado}>Seu IMC é:</Text>
-            <Text style={styles.resultadoIMC}>{imc?.toFixed(1)}</Text>
-            <Text style={styles.labelResultado}>Classificação</Text>
-          <Text style={styles.classificaoIMC}>{classificacao}</Text>
-        </View>
+          <Resultado imc={imc}></Resultado>
         )}
       </View>
 
@@ -84,17 +75,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#249cb1",
   },
 
-  containerLogo: {
-    height: 150,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  logo: {
-    width: 170,
-    height: 60,
-  },
-
   form: {
     backgroundColor: "#ffffff",
     padding: 30,
@@ -104,7 +84,7 @@ const styles = StyleSheet.create({
   },
 
   alerta: {
-    textAlign: 'center',
+    textAlign: "center",
     backgroundColor: "#ff0000",
     color: "#ffffff",
     padding: 10,
@@ -142,37 +122,5 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     textAlign: "center",
-  },
-
-  resultado: {
-    backgroundColor: "#DDD",
-    padding: 15,
-    borderRadius: 20,
-  },
-
-  labelResultado: {
-    fontSize: 18,
-    fontWeight: 800,
-    textAlign: "center",
-    marginBottom: 10,
-  },
-
-  resultadoIMC: {
-    backgroundColor: "#FFF",
-    padding: 10,
-    borderRadius: 10,
-    textAlign: "center",
-    fontSize: 24,
-    marginBottom: 10,
-  },
-
-  classificaoIMC: {
-    backgroundColor: "#ff0000",
-    color: "#FFF",
-    padding: 10,
-    borderRadius: 10,
-    textAlign: "center",
-    fontSize: 24,
-    marginBottom: 10,
   },
 });
