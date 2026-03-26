@@ -7,8 +7,9 @@ import {
   View,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { auth } from "../scripts/firebase-config";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, database } from "../scripts/firebase-config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { set, ref } from "firebase/database"; 
 
 export default function CreateUser() {
   const [nome, setNome] = useState("");
@@ -21,8 +22,12 @@ export default function CreateUser() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        router.push('/');
-    })
+        set(ref(database, "users/" + user.uid), {
+          nome: nome,
+          email: email,
+        });
+        router.push("/");
+      })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -33,23 +38,19 @@ export default function CreateUser() {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Criar Usuário</Text>
-
-      <Text style={styles.alert}>{error}</Text>
-
+      {error != null && <Text style={styles.alert}>{error}</Text>} */
       <TextInput
         style={styles.input}
         value={nome}
         onChangeText={setNome}
         placeholder="Nome"
       />
-
       <TextInput
         style={styles.input}
         value={email}
         onChangeText={setEmail}
         placeholder="E-mail"
       />
-
       <TextInput
         style={styles.input}
         value={password}
@@ -57,7 +58,6 @@ export default function CreateUser() {
         placeholder="Senha"
         secureTextEntry={true}
       />
-
       <TouchableOpacity style={styles.button} onPress={userCreate}>
         <Text style={styles.textButton}>Criar usuário</Text>
       </TouchableOpacity>
