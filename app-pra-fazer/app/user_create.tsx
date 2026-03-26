@@ -22,7 +22,7 @@ export default function CreateUser() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        set(ref(database, "users/" + user.uid), {
+        set(ref(database, "usuarios/" + user.uid), {
           nome: nome,
           email: email,
         });
@@ -38,7 +38,7 @@ export default function CreateUser() {
   return (
     <View style={styles.container}>
       <Text style={styles.titulo}>Criar Usuário</Text>
-      {error != null && <Text style={styles.alert}>{error}</Text>} */
+      {error != null && <Text style={styles.alert}>{error}</Text>}
       <TextInput
         style={styles.input}
         value={nome}
