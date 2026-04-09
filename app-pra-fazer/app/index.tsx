@@ -22,7 +22,7 @@ export default function Index() {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        router.push("/(tabs)");
+        router.push("/(tabs)/tarefas");
       })
       .catch((error) => {
         const errorCode = error.code;
