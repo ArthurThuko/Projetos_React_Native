@@ -1,12 +1,13 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { Text, View } from "@/components/Themed";
+import { router } from "expo-router";
 
 export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tarefas</Text>
-      <TouchableOpacity style={styles.btnTask}>
+      <TouchableOpacity style={styles.btnTask} onPress={() => router.push("/task_create")}>
         <Text style={styles.textBtnTask}>+</Text>
       </TouchableOpacity>
     </View>
